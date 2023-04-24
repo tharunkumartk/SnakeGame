@@ -22,6 +22,7 @@ const GLOBAL_WIDTH = 10;
 const GLOBAL_HEIGHT = 10;
 const GLOBAL_SPEED = 150; // ms
 
+// grid item component that depends on itemtype. 0 = empty, 1 = snake, 2 = food
 const GridItem = ({ itemType }: GridItemProps) => {
   return (
     <div
@@ -38,7 +39,6 @@ const GridItem = ({ itemType }: GridItemProps) => {
 };
 
 const Snake = () => {
-  // grid size is 15 by 15. 0,0 is top left
   // each entry (i,j) is a grid item that is 50px by 50px, with 2px margin
 
   // boolean representing whether game is over
@@ -112,7 +112,7 @@ const Snake = () => {
     return () => clearInterval(interval);
   }, [snake, direction]);
 
-  // handles keystrokes
+  // handles direction control for keystrokes
   const handleKeyDown = (event: KeyboardEvent) => {
     console.log(direction);
     switch (event.key) {
@@ -139,6 +139,7 @@ const Snake = () => {
     }
   };
 
+  // handles keystroke detection
   useEffect(() => {
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
@@ -180,7 +181,7 @@ const Snake = () => {
     setFood(randomFood());
   };
 
-  // function that handles updating the state
+  // handles updating the state (game over, food eaten, etc.)
   const updateState = () => {
     // if snake head is on food, add new head to snake
     if (snake[0].x === food.x && snake[0].y === food.y) {
