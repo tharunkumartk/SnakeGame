@@ -1,4 +1,4 @@
-## Snake Game React
+## Snake
 
 Basic snake game with WASD controls built into the webpage.
 
