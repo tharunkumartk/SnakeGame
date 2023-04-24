@@ -1,6 +1,6 @@
 ## Snake
 
-Basic snake game with WASD controls built into the webpage.
+Basic snake game with WASD controls built into the webpage. [Live URL] (https://tharunsnakegame.netlify.app/).
 
 ## Available Scripts
 
