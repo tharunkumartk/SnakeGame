@@ -23,6 +23,7 @@ const GLOBAL_HEIGHT = 10;
 const GLOBAL_SPEED = 150; // ms
 
 // grid item component that depends on itemtype. 0 = empty, 1 = snake, 2 = food
+// each entry (i,j) is a grid item that is 50px by 50px, with 2px margin
 const GridItem = ({ itemType }: GridItemProps) => {
   return (
     <div
@@ -38,9 +39,26 @@ const GridItem = ({ itemType }: GridItemProps) => {
   );
 };
 
-const Snake = () => {
-  // each entry (i,j) is a grid item that is 50px by 50px, with 2px margin
+/**
+ * Snake component that handles all game logic and rendering. uses the
+ * following state variables:
+ *
+ * gameOver: boolean representing whether game is over
+ * snake: array representing current boxes that represent the snake
+ * score: number of food eaten
+ * food: single entry representing the current food
+ * direction: represents direction of current movement
+ *
+ * updateState() is the function that handles all game logic, including eating
+ * food, game over, etc.
+ *
+ * grid size is defined by GLOBAL_WIDTH and GLOBAL_HEIGHT. time between each update
+ * is defined by GLOBAL_SPEED.
+ *
+ * @returns component that describes tutorial as well as the actual game.
+ */
 
+const Snake = () => {
   // boolean representing whether game is over
   const [gameOver, setGameOver] = React.useState<boolean>(false);
 
@@ -84,7 +102,7 @@ const Snake = () => {
     if (entry.y === -1) entry.y = GLOBAL_HEIGHT - 1;
     return entry;
   };
-  // updates snake position every 500ms
+  // updates snake position every GLOBAL_SPEED time
   useEffect(() => {
     const interval = setInterval(() => {
       let newSnake = [...snake];
@@ -110,7 +128,7 @@ const Snake = () => {
       updateState();
     }, GLOBAL_SPEED);
     return () => clearInterval(interval);
-  }, [snake, direction]);
+  });
 
   // handles direction control for keystrokes
   const handleKeyDown = (event: KeyboardEvent) => {
